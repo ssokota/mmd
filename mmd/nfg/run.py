@@ -44,8 +44,10 @@ def main(
             )
             / 2,
         ]
-        maximizer.update(game.compute_payoffs(None, minimizer.train_policy()))
-        minimizer.update(game.compute_payoffs(maximizer.train_policy(), None))
+        max_payoffs = game.compute_payoffs(None, minimizer.train_policy())
+        min_payoffs = game.compute_payoffs(maximizer.train_policy(), None)
+        maximizer.update(max_payoffs)
+        minimizer.update(min_payoffs)
         if should_save:
             df = pd.DataFrame(data)
             df.to_csv(fn + ".csv")
